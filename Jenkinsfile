@@ -29,12 +29,13 @@ pipeline {
                 bat 'npm run build'
             }
         }
-
-        stage('Archive Build') {
+        stage('Deploy to Vercel') {
             steps {
-                archiveArtifacts artifacts: 'dist/**', allowEmptyArchive: true
+                // Use the stored Vercel token
+                withCredentials([string(credentialsId: 'VERCEL_TOKEN', variable: 'VERCEL_TOKEN')]) {
+                    bat 'npx vercel --prod --token %VERCEL_TOKEN%'
+                }
             }
-        }
     }
 
     post {
