@@ -30,8 +30,7 @@ pipeline {
             }
         }
         stage('Deploy to Vercel') {
-            steps {
-                // Use the stored Vercel token
+            steps { // Use the stored Vercel token
                 withCredentials([string(credentialsId: 'VERCEL_TOKEN', variable: 'VERCEL_TOKEN')]) {
                     bat 'npx vercel --prod --token %VERCEL_TOKEN%'
                 }
@@ -49,4 +48,5 @@ pipeline {
             echo 'Build failed!'
         }
     }
+}
 }
